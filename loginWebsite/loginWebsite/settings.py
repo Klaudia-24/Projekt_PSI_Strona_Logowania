@@ -56,9 +56,11 @@ AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesStandaloneBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-AXES_FAILURE_LIMIT: 3
-AXES_COOLOFF_TIME: 0.05
+AXES_FAILURE_LIMIT= 3
+AXES_COOLOFF_TIME= 0.01
 AXES_RESET_ON_SUCCESS = True
+AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT=False
+
 
 ROOT_URLCONF = 'loginWebsite.urls'
 
