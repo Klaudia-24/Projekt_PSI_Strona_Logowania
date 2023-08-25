@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser,BaseUserManager,EmptyManager
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from sendgrid import Content
-
+from datetime import timedelta
 from django.utils.http import urlsafe_base64_encode
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail,To,Email
@@ -37,7 +37,7 @@ class Users(AbstractUser):
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['email']
     is_active = models.BooleanField(default=True)
-    password_change_date=models.DateTimeField(default=timezone.now)
+    password_change_date=models.DateTimeField(default=timezone.now()+timedelta(days=30))
 
     objects = UserMenager()
     def check_password(self, raw_password):

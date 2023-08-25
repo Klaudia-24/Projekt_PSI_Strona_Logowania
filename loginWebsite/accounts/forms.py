@@ -48,3 +48,18 @@ class SignUpForm(ModelForm):
         if psw1 != psw2:
             raise ValidationError("Passwords are different.")
         return self.cleaned_data
+
+class LoginForm(Form):
+    username=CharField(max_length=30,required=True, label='username')
+    password=CharField(max_length=100,required=True, label='password', widget=PasswordInput)
+    class Meta:
+        model = Users
+        fields = ["username", "password"]
+    def clean(self):
+        cleaned_data = super().clean()
+        log=cleaned_data["username"]
+        try:
+            user = Users.objects.get(username=log)
+        except Users.DoesNotExist:
+            raise ValidationError("User doesn't exist.")
+        return cleaned_data
