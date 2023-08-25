@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "accounts",
-    "axes",
 ]
 
 MIDDLEWARE = [
@@ -56,10 +55,6 @@ AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesStandaloneBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-AXES_FAILURE_LIMIT= 3
-AXES_COOLOFF_TIME= 0.01
-AXES_RESET_ON_SUCCESS = True
-AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT=False
 
 
 ROOT_URLCONF = 'loginWebsite.urls'
@@ -143,7 +138,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+DEFAULT_FROM_EMAIL=""
+
