@@ -60,7 +60,7 @@ class Users(AbstractUser):
         subject = "Password Recovery from website"
         content = Content("text/plain", f"You are receiving this email because of your reset password request.\n"
                                         f"Please go to this page and choose a new password:\n"
-                                        f"http://{DOMAIN}/accounts/reset_password_confirm/{uid}/{token}")
+                                        f"http://{DOMAIN}/accounts/resetPasswordConfirm/{uid}/{token}")
         print(content.get())
         message = Mail(from_email, to_email, subject, content)
         sg = SendGridAPIClient(api_key=SENDGRID_API_KEY)

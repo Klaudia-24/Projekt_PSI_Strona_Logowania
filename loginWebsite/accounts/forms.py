@@ -63,3 +63,69 @@ class LoginForm(Form):
         except Users.DoesNotExist:
             raise ValidationError("User doesn't exist.")
         return cleaned_data
+
+class PasswordResetByEmailForm(Form):
+    email=CharField(max_length=30, required=True, label='email')
+
+    class Meta:
+        model = Users
+        fields = ['email']
+
+    def clean(self):
+        cleaned_data=super().clean()
+
+        if not re.fullmatch(emailPattern, cleaned_data["email"]):
+            raise ValidationError("Incorrect email form.")
+        return cleaned_data
+
+class PasswordResetInputForm(Form):
+    password = CharField(widget=PasswordInput,label='password')
+    password2 = CharField(widget=PasswordInput, label='confirm password')
+    class Meta:
+        model=Users
+        fields=['password','password2']
+    def clean(self):
+        super(PasswordResetInputForm,self).clean()
+        psw1 = self.cleaned_data.get("password")
+        psw2 = self.cleaned_data.get("password2")
+        if not re.fullmatch(passwordPattern, psw1):
+            raise ValidationError("Password needs at least 8 sings")
+        if psw1 != psw2:
+            raise ValidationError("Passwords are different.")
+
+        return self.cleaned_data
+
+class PasswordAlreadyUsedError(Exception):
+    pass
+class UserPasswordHistory(Form):
+    password = CharField(widget=PasswordInput, label='password')
+    password2 = CharField(widget=PasswordInput, label='confirm password')
+    class Meta:
+        model=PasswordArchive
+        fields = ['password', 'password2']
+
+
+    def __init__(self,user=None, *args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.user: Users = user
+
+    def clean(self):
+        cleaned_data = super(UserPasswordHistory, self).clean()
+        entry = PasswordArchive(user=self.user,password=self.user.password)
+        entry.save()
+        try:
+            query = PasswordArchive.objects.filter(user=self.user)
+            if query.count() > 20:
+                record = PasswordArchive.objects.earliest('date')
+                record.delete()
+        except PasswordArchive.DoesNotExist:
+            pass
+        else:
+            ph = argon2.PasswordHasher()
+            for element in query:
+                try:
+                    if ph.verify(element.password[6:],cleaned_data["password"]):
+                        raise PasswordAlreadyUsedError
+                except argon2.exceptions.VerifyMismatchError:
+                    pass
+        return cleaned_data

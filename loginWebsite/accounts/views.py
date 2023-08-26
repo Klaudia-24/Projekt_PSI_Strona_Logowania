@@ -1,7 +1,10 @@
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, PasswordResetByEmailForm, PasswordResetInputForm, UserPasswordHistory, \
+    PasswordAlreadyUsedError
 from django.shortcuts import render, redirect
 from .models import Users, BlockedUser, Logs, Activity
+from django.utils.http import urlsafe_base64_decode
 from django.contrib import messages
+from django.contrib.auth.tokens import default_token_generator
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth import authenticate,login,logout
@@ -84,3 +87,60 @@ def LogOut(request):
     log.save()
     logout(request)
     return redirect('home')
+
+def ResetPasswordByEmail(request):
+    if request.user.is_authenticated:
+        return redirect('resetPasswordConfirm')
+    if request.method == "POST":
+        form=PasswordResetByEmailForm(request.POST)
+        if form.is_valid():
+            try:
+                user=Users.objects.get(email=form.cleaned_data["email"])
+                user.sendPasswordResetLink(request)
+                log = Logs(acivity=Activity.objects.get(activityName="uservalidationlinkrequest"), user=user)
+                log.save()
+            except Users.DoesNotExist:
+                pass
+            except Exception as e:
+                messages.error(request, "Error while sending email.")
+            else:
+                return redirect('passwordResetLinkSent')
+    return render(request,'registration/password_reset_form.html', {'form': PasswordResetByEmailForm()})
+
+def passwordResetLinkSent(request):
+    return render(request, 'registration/password_reset_done.html', {})
+
+def passwordResetConfirm(request,uidb64=None,token=None,*args, **kwargs):
+    if request.user.is_authenticated:
+        user=request.user
+        tokenFlag=True
+    else:
+        try:
+            uid = urlsafe_base64_decode(uidb64)
+            user = Users.objects.get(pk=uid)
+            tokenFlag=default_token_generator.check_token(user, token)
+        except (TypeError, ValueError, OverflowError, Users.DoesNotExist):
+            user = None
+            tokenFlag=None
+
+    if request.method=='POST':
+        form=PasswordResetInputForm(request.POST)
+        form2=UserPasswordHistory(user,request.POST)
+        try:
+            if form.is_valid() and form2.is_valid():
+                if user is not None and tokenFlag:
+                        user.set_password(form.cleaned_data['password'])
+                        user.password_change_date=timezone.now()+timedelta(days=30)
+                        user.save()
+                        log = Logs(acivity=Activity.objects.get(activityName="userpasswordreset"), user=user)
+                        log.save()
+                        return redirect('resetPasswordDone')
+                else:
+                    if tokenFlag is not None:
+                        messages.error(request, 'Your password has not been modified, token expired')
+        except PasswordAlreadyUsedError:
+            messages.error(request, 'Your password has already been used. Choose a different one.')
+    return render(request,'registration/password_reset_confirm.html', {'form': PasswordResetInputForm(), 'validlink': True})
+
+def resetPasswordDone(request):
+    return render(request, 'registration/password_reset_complete.html', {})
