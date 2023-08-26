@@ -96,8 +96,8 @@ def ResetPasswordByEmail(request):
         if form.is_valid():
             try:
                 user=Users.objects.get(email=form.cleaned_data["email"])
-                user.sendPasswordResetLink(request)
-                log = Logs(acivity=Activity.objects.get(activityName="uservalidationlinkrequest"), user=user)
+                user.sendPasswordResetLink()
+                log = Logs(acivity=Activity.objects.get(activityName="Reset Link Request"), user=user)
                 log.save()
             except Users.DoesNotExist:
                 pass
@@ -132,7 +132,7 @@ def passwordResetConfirm(request,uidb64=None,token=None,*args, **kwargs):
                         user.set_password(form.cleaned_data['password'])
                         user.password_change_date=timezone.now()+timedelta(days=30)
                         user.save()
-                        log = Logs(acivity=Activity.objects.get(activityName="userpasswordreset"), user=user)
+                        log = Logs(acivity=Activity.objects.get(activityName="Password Reset"), user=user)
                         log.save()
                         return redirect('resetPasswordDone')
                 else:

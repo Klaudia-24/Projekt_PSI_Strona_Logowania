@@ -9,10 +9,9 @@ from datetime import timedelta
 from django.utils.http import urlsafe_base64_encode
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail,To,Email
+from .settings import SENDGRID_API_KEY, DOMAIN
 import argon2
 
-SENDGRID_API_KEY="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"
-DOMAIN = "127.0.0.1:8000"
 
 class UserMenager(BaseUserManager):
     def create_user(self, password=None):
