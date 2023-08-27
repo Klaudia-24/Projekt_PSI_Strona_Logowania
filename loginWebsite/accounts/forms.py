@@ -8,7 +8,7 @@ import argon2
 
 emailPattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
 # passwordPattern = re.compile(r'[A-Za-z0-9@#$%^&+=]{8,}')
-passwordPattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+?-]){8,}$')
+passwordPattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+?-]).{8,}$')
 
 class SignUpForm(ModelForm):
     password2=CharField(widget=PasswordInput, label="Confirm password")
@@ -45,7 +45,7 @@ class SignUpForm(ModelForm):
         psw2 = self.cleaned_data.get("password2")
 
         if not re.fullmatch(passwordPattern, psw1):
-            raise ValidationError("Password needs at least 8 sings")
+            raise ValidationError("Password needs at least 8 sings including: 1 lower case letter, 1 upper case letter, 1 digit and 1 special sing.")
         if psw1 != psw2:
             raise ValidationError("Passwords are different.")
         return self.cleaned_data
