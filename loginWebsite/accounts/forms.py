@@ -48,8 +48,8 @@ class SignUpForm(ModelForm):
         return self.cleaned_data
 
 class LoginForm(Form):
-    username=CharField(max_length=30,required=True, label='username')
-    password=CharField(max_length=100,required=True, label='password', widget=PasswordInput)
+    username=CharField(max_length=30,required=True, label='Username')
+    password=CharField(max_length=100,required=True, label='Password', widget=PasswordInput)
     class Meta:
         model = Users
         fields = ["username", "password"]

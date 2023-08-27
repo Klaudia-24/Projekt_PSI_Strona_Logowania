@@ -4,7 +4,7 @@
 
 {% block content %}
 {% if form.errors or form.non_field_errors %}
-<!-- error -->
+<!-- error-->
 {% endif %}
 {% if messages %}
 <ul class="messages">
@@ -14,12 +14,35 @@
 </ul>
 {% endif %}
 
-<h2>Log In</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-   <div>Nie masz jeszcze konta? <a href="{% url 'signup' %}">Zarejestruj się.</a></div>
-  <button type="submit">Log In</button>
-</form>
-<a href="{% url 'ResetPasswordByEmail' %}"><button> Forgot Password</button></a>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form method="post">
+                    {% csrf_token %}
+                    <h2>Login</h2>
+                    <div class="inputbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input id="id_username" type="text" required>
+                        <label for="id_username">Username</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input id="id_password" type="password" required>
+                        <label for="id_password">Password</label>
+                    </div>
+                    <div class="forget">
+                        <label for="">Forget Password? <a href="{% url 'ResetPasswordByEmail' %}">Remind me</a></label>
+
+                    </div>
+                    <button type="submit">Log in</button>
+                    <div class="register">
+                        <p>Don't have an account <a href="{% url 'signup' %}">Register</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 {% endblock %}
