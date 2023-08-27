@@ -7,6 +7,12 @@
   Hi {{ user.username }}!
   <a href="{% url 'logout' %}"><button>Log Out</button></a>
   <a href="{% url 'ResetPasswordByEmail' %}"><button> Forgot Password</button></a>
+  <h1>User log activities:</h1>
+  <div class="content">
+      {% for log in user.logs.all %}
+            <li>({{ log.time }}) - {{ log.activity.activityName }}</li>
+      {% endfor %}
+  </div>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}"><Button>Login</Button></a>

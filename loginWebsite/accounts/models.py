@@ -1,7 +1,6 @@
-
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser,BaseUserManager,EmptyManager
+from django.contrib.auth.models import AbstractUser,BaseUserManager
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from sendgrid import Content
@@ -78,7 +77,7 @@ class BlockedUser(models.Model):
 class Logs(models.Model):
     user=models.ForeignKey(Users,on_delete=models.CASCADE, related_name='logs')
     time=models.DateTimeField(default=timezone.now)
-    acivity=models.ForeignKey(Activity,on_delete=models.PROTECT)
+    activity=models.ForeignKey(Activity, on_delete=models.PROTECT)
 
 class PasswordArchive(models.Model):
     user=models.ForeignKey(Users,on_delete=models.CASCADE)

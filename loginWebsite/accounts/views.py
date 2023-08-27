@@ -57,7 +57,7 @@ def LoginPage(request):
                 user.counter = 0
                 user.save()
                 login(request, user)
-                log = Logs(acivity=Activity.objects.get(activityName="Logged In"), user=user)
+                log = Logs(activity=Activity.objects.get(activityName="Logged In"), user=user)
                 log.save()
                 if user.password_change_date - timedelta(days=5) < timezone.now():
                     wynik = user.password_change_date - timezone.now()
@@ -67,13 +67,13 @@ def LoginPage(request):
             else:
                 user: Users = Users.objects.get(username=form.cleaned_data["username"])
                 user.counter += 1
-                log = Logs(acivity=Activity.objects.get(activityName="Loggin Failed"), user=user)
+                log = Logs(activity=Activity.objects.get(activityName="Loggin Failed"), user=user)
                 log.save()
                 if user.counter > 3:
                     user.counter = 0
                     blocked = BlockedUser(user=user)
                     blocked.save()
-                    log = Logs(acivity=Activity.objects.get(activityName="User Blocked"), user=user)
+                    log = Logs(activity=Activity.objects.get(activityName="User Blocked"), user=user)
                     log.save()
                 user.save()
                 messages.error(request, "Incorrect password or username")
@@ -83,7 +83,7 @@ def LoginPage(request):
 
 @login_required
 def LogOut(request):
-    log = Logs(acivity=Activity.objects.get(activityName="Logged Out"), user=request.user)
+    log = Logs(activity=Activity.objects.get(activityName="Logged Out"), user=request.user)
     log.save()
     logout(request)
     return redirect('home')
@@ -97,7 +97,7 @@ def ResetPasswordByEmail(request):
             try:
                 user=Users.objects.get(email=form.cleaned_data["email"])
                 user.sendPasswordResetLink()
-                log = Logs(acivity=Activity.objects.get(activityName="Reset Link Request"), user=user)
+                log = Logs(activity=Activity.objects.get(activityName="Reset Link Request"), user=user)
                 log.save()
             except Users.DoesNotExist:
                 pass
@@ -122,25 +122,28 @@ def passwordResetConfirm(request,uidb64=None,token=None,*args, **kwargs):
         except (TypeError, ValueError, OverflowError, Users.DoesNotExist):
             user = None
             tokenFlag=None
-
+    form = None
     if request.method=='POST':
         form=PasswordResetInputForm(request.POST)
         form2=UserPasswordHistory(user,request.POST)
-        try:
-            if form.is_valid() and form2.is_valid():
-                if user is not None and tokenFlag:
-                        user.set_password(form.cleaned_data['password'])
-                        user.password_change_date=timezone.now()+timedelta(days=30)
-                        user.save()
-                        log = Logs(acivity=Activity.objects.get(activityName="Password Reset"), user=user)
-                        log.save()
-                        return redirect('resetPasswordDone')
-                else:
-                    if tokenFlag is not None:
-                        messages.error(request, 'Your password has not been modified, token expired')
-        except PasswordAlreadyUsedError:
-            messages.error(request, 'Your password has already been used. Choose a different one.')
-    return render(request,'registration/password_reset_confirm.html', {'form': PasswordResetInputForm(), 'validlink': True})
+        if form.is_valid():
+            print('a')
+            try:
+                if form2.is_valid():
+                    print('a')
+                    if user is not None and tokenFlag:
+                            user.set_password(form.cleaned_data['password'])
+                            user.password_change_date=timezone.now()+timedelta(days=30)
+                            user.save()
+                            log = Logs(activity=Activity.objects.get(activityName="Password Reset"), user=user)
+                            log.save()
+                            return redirect('resetPasswordDone')
+                    else:
+                        if tokenFlag is not None:
+                            messages.error(request, 'Your password has not been modified, token expired')
+            except PasswordAlreadyUsedError:
+                messages.error(request, 'Your password has already been used. Choose a different one.')
+    return render(request,'registration/password_reset_confirm.html',  {'form': form if form is not None else PasswordResetInputForm(), 'validlink': True})
 
 def resetPasswordDone(request):
     return render(request, 'registration/password_reset_complete.html', {})

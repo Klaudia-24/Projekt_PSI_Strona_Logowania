@@ -1,6 +1,3 @@
-from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 from .models import Users, PasswordArchive
 from django.forms import ModelForm, CharField, PasswordInput, ValidationError, Form
 import re
@@ -89,11 +86,10 @@ class PasswordResetInputForm(Form):
         super(PasswordResetInputForm,self).clean()
         psw1 = self.cleaned_data.get("password")
         psw2 = self.cleaned_data.get("password2")
-        if not re.fullmatch(passwordPattern, psw1):
-            raise ValidationError("Password needs at least 8 sings")
         if psw1 != psw2:
             raise ValidationError("Passwords are different.")
-
+        if not re.fullmatch(passwordPattern, psw1):
+            raise ValidationError("Password needs at least 8 sings including: 1 lower case letter, 1 upper case letter, 1 digit and 1 special sing.")
         return self.cleaned_data
 
 class PasswordAlreadyUsedError(Exception):
