@@ -90,7 +90,7 @@ def LogOut(request):
 
 def ResetPasswordByEmail(request):
     if request.user.is_authenticated:
-        return redirect('resetPasswordConfirm')
+        return redirect('loggedPasswordReset')
     if request.method == "POST":
         form=PasswordResetByEmailForm(request.POST)
         if form.is_valid():
