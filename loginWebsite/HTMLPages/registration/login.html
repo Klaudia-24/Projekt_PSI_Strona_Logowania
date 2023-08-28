@@ -22,13 +22,13 @@
                     <h2>Login</h2>
                     <div class="inputbox">
                         <ion-icon name="person-outline"></ion-icon>
-                        <input id="id_username" type="text" required>
-                        <label for="id_username">Username</label>
+                        <input id="username" type="text" name="username" required>
+                        <label for="username">Username</label>
                     </div>
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
-                        <input id="id_password" type="password" required>
-                        <label for="id_password">Password</label>
+                        <input id="password" type="password" name="password" required>
+                        <label for="password">Password</label>
                     </div>
                     <div class="forget">
                         <label for="">Forget Password? <a href="{% url 'ResetPasswordByEmail' %}">Remind me</a></label>
