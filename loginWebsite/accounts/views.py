@@ -127,10 +127,8 @@ def passwordResetConfirm(request,uidb64=None,token=None,*args, **kwargs):
         form=PasswordResetInputForm(request.POST)
         form2=UserPasswordHistory(user,request.POST)
         if form.is_valid():
-            print('a')
             try:
                 if form2.is_valid():
-                    print('a')
                     if user is not None and tokenFlag:
                             user.set_password(form.cleaned_data['password'])
                             user.password_change_date=timezone.now()+timedelta(days=30)

@@ -1,0 +1,44 @@
+[
+  {
+    "model": "accounts.Activity",
+    "pk": 1,
+    "fields": {
+      "activityName": "Logged In"
+    }
+  },
+  {
+    "model": "accounts.Activity",
+    "pk": 2,
+    "fields": {
+      "activityName": "Logged Out"
+    }
+  },
+  {
+    "model": "accounts.Activity",
+    "pk": 3,
+    "fields": {
+      "activityName": "Reset Link Request"
+    }
+  },
+    {
+    "model": "accounts.Activity",
+    "pk": 4,
+    "fields": {
+      "activityName": "Password Reset"
+    }
+  },
+    {
+    "model": "accounts.Activity",
+    "pk": 5,
+    "fields": {
+      "activityName": "Loggin Failed"
+    }
+  },
+    {
+    "model": "accounts.Activity",
+    "pk": 6,
+    "fields": {
+      "activityName": "User Blocked"
+    }
+  }
+]

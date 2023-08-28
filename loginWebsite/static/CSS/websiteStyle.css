@@ -3,19 +3,45 @@
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
 }
 
-
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
 section{
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     width: 100%;
-
     background: url('../images/main_background.jpg')no-repeat;
     background-position: center;
     background-size: cover;
+}
+
+section.mainpage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    width: 100%;
+    background: url('../images/main_background.jpg')no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+section.logged{
+    display: grid;
+    min-height: 90vh;
+    width: 100%;
+    background: url('../images/rest_background.jpg')no-repeat;
+    background-position: center;
+    background-size: cover;
+
 }
 
 .form-box{
@@ -43,7 +69,6 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 h2{
@@ -154,4 +179,84 @@ button{
     text-decoration: none;
     color: #fff;
     font-weight: bold;
+}
+
+.navbar {
+   width: auto;
+   height:5vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: teal;
+  color: #000;
+}
+
+.nav-links a {
+  color: #fff;
+}
+
+/* NAVBAR MENU */
+.menu {
+  display: flex;
+  gap: 1em;
+  font-size: 18px;
+}
+
+.menu li:hover {
+  background-color: #4c9e9e;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+.menu li {
+  padding: 5px 14px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition-delay: 9999s;
+    transition-delay: 9999s;
+}
+
+.errors{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #669999;
+}
+
+tr {
+  text-align: center;
+  height: 50px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #6699CC;
+}
+
+table{
+    display: grid;
+    height: 300px;
+    overflow: auto;
+}
+
+th {
+  text-align: center;
+  position: sticky;
+  top: 0;
+  background-color: teal;
+}
+
+.content{
+width:100vh;
+}
+
+.bigger{
+font-size:20px;
 }

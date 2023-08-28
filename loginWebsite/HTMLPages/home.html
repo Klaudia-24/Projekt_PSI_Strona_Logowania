@@ -4,17 +4,56 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <a href="{% url 'logout' %}"><button>Log Out</button></a>
-  <a href="{% url 'ResetPasswordByEmail' %}"><button> Forgot Password</button></a>
-  <h1>User log activities:</h1>
-  <div class="content">
-      {% for log in user.logs.all %}
-            <li>({{ log.time }}) - {{ log.activity.activityName }}</li>
-      {% endfor %}
-  </div>
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}"><Button>Login</Button></a>
-{% endif %}
+<nav class="navbar">
+    <ul class="nav-links">
+      <div class="menu">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'ResetPasswordByEmail' %}">Reset Password</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+      </div>
+    </ul>
+</nav>
+<section class="logged">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+      <div class="content">
+          <p class="bigger">Hi {{ user.username }}!</p>
+          <br>
+          <br>
+          <h1>User log activities:</h1>
+          <br>
+          <table>
+              <tr>
+                  <th style="width:450px;">Date</th>
+                  <th style="width:350px;">Activity</th>
+              </tr>
+              {% for log in user.logs.all %}
+              <tr>
+                <td>{{ log.time }}</td><td>{{ log.activity.activityName }}</td>
+              </tr>
+          {% endfor %}
+          </table>
+
+      </div>
+</section>
+    {% else %}
+    <nav class="navbar">
+    <ul class="nav-links">
+         <!-- NAVIGATION MENUS -->
+      <div class="menu">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+      </div>
+    </ul>
+</nav>
+<section class="mainpage">
+    <p>Welcome! Use login to enter website.</p>
+</section>
+    {% endif %}
+
 {% endblock %}
