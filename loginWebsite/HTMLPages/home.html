@@ -25,19 +25,23 @@
           <p class="bigger">Hi {{ user.username }}!</p>
           <br>
           <br>
-          <h1>Your activities:</h1>
-          <br>
-          <table>
-              <tr>
-                  <th style="width:450px;">Date</th>
-                  <th style="width:350px;">Activity</th>
-              </tr>
-              {% for log in user.logs.all reversed %}
-              <tr>
-                <td>{{ log.time }}</td><td>{{ log.activity.activityName }}</td>
-              </tr>
-          {% endfor %}
-          </table>
+          <button onclick="myFunction()">Show/Hide Table</button>
+          <div id="myDIV">
+              <br>
+              <h1>Your activities:</h1>
+              <br>
+              <table>
+                  <tr>
+                      <th style="width:450px;">Date</th>
+                      <th style="width:350px;">Activity</th>
+                  </tr>
+                  {% for log in user.logs.all reversed %}
+                  <tr>
+                    <td>{{ log.time }}</td><td>{{ log.activity.activityName }}</td>
+                  </tr>
+              {% endfor %}
+              </table>
+          </div>
       </div>
 </section>
     {% else %}
@@ -54,5 +58,14 @@
     <p>Welcome! Use login to enter website.</p>
 </section>
     {% endif %}
-
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
 {% endblock %}
