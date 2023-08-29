@@ -25,20 +25,19 @@
           <p class="bigger">Hi {{ user.username }}!</p>
           <br>
           <br>
-          <h1>Your log activities:</h1>
+          <h1>Your activities:</h1>
           <br>
           <table>
               <tr>
                   <th style="width:450px;">Date</th>
                   <th style="width:350px;">Activity</th>
               </tr>
-              {% for log in user.logs.all %}
+              {% for log in user.logs.all reversed %}
               <tr>
                 <td>{{ log.time }}</td><td>{{ log.activity.activityName }}</td>
               </tr>
           {% endfor %}
           </table>
-
       </div>
 </section>
     {% else %}

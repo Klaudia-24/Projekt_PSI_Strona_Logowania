@@ -100,7 +100,7 @@ h2{
     text-align: center;
 }
 
-section p{
+section p.reset{
     font-size: 20px;
     color: #fff;
     text-align: center;
@@ -289,4 +289,5 @@ width:100vh;
 
 .bigger{
 font-size:30px;
+text-align: center;
 }
