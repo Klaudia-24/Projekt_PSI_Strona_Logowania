@@ -71,7 +71,6 @@ class PasswordResetByEmailForm(Form):
 
     def clean(self):
         cleaned_data=super().clean()
-
         if not re.fullmatch(emailPattern, cleaned_data["email"]):
             raise ValidationError("Incorrect email form.")
         return cleaned_data

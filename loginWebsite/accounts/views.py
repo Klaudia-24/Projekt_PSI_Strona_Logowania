@@ -105,7 +105,9 @@ def ResetPasswordByEmail(request):
                 messages.error(request, "Error while sending email.")
             else:
                 return redirect('passwordResetLinkSent')
-    return render(request,'registration/password_reset_form.html', {'form': PasswordResetByEmailForm()})
+    else:
+        form=PasswordResetByEmailForm()
+    return render(request,'registration/password_reset_form.html', {'form': form})
 
 def passwordResetLinkSent(request):
     return render(request, 'registration/password_reset_done.html', {})
