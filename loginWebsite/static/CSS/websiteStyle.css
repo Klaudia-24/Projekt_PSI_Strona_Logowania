@@ -44,6 +44,16 @@ section.logged{
 
 }
 
+section.passwordReset{
+    display: grid;
+    min-height: 100vh;
+    width: 100%;
+    background: url('../images/rest_background.jpg')no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+
 .form-box{
     position: relative;
     width: 400px;
@@ -71,11 +81,31 @@ section.logged{
     align-items: center;
 }
 
+.form-box-passwordReset{
+    position: relative;
+    width: 400px;
+    height: 400px;
+    background: transparent;
+    border: 3px solid rgba(255,255,255,0.5);
+    border-radius: 25px;
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 h2{
     font-size: 35px;
     color: #fff;
     text-align: center;
 }
+
+section p{
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+}
+
 .inputbox{
     position: relative;
     margin: 30px 0;
@@ -258,5 +288,5 @@ width:100vh;
 }
 
 .bigger{
-font-size:20px;
+font-size:30px;
 }
