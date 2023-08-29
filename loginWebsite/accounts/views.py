@@ -132,12 +132,15 @@ def passwordResetConfirm(request,uidb64=None,token=None,*args, **kwargs):
             try:
                 if form2.is_valid():
                     if user is not None and tokenFlag:
-                            user.set_password(form.cleaned_data['password'])
-                            user.password_change_date=timezone.now()+timedelta(days=30)
-                            user.save()
-                            log = Logs(activity=Activity.objects.get(activityName="Password Reset"), user=user)
-                            log.save()
-                            return redirect('resetPasswordDone')
+                            if user.password_change_date-timedelta(days=30)>=timezone.now()-timedelta(days=1):
+                                messages.error(request,"Password changed recently, wait 1 day.")
+                            else:
+                                user.set_password(form.cleaned_data['password'])
+                                user.password_change_date=timezone.now()+timedelta(days=30)
+                                user.save()
+                                log = Logs(activity=Activity.objects.get(activityName="Password Reset"), user=user)
+                                log.save()
+                                return redirect('resetPasswordDone')
                     else:
                         if tokenFlag is not None:
                             messages.error(request, 'Your password has not been modified, token expired')

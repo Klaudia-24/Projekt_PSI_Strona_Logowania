@@ -6,6 +6,10 @@
     color: #fff;
 }
 
+html, body {
+     min-height: 100%;
+}
+
 li {
   list-style: none;
 }
@@ -36,7 +40,7 @@ section.mainpage{
 
 section.logged{
     display: grid;
-    min-height: 90vh;
+    min-height: 91vh;
     width: 100%;
     background: url('../images/rest_background.jpg')no-repeat;
     background-position: center;
@@ -213,7 +217,7 @@ button{
 
 .navbar {
    width: auto;
-   height:5vh;
+   height:4vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
