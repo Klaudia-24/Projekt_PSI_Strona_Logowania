@@ -291,3 +291,8 @@ width:100vh;
 font-size:30px;
 text-align: center;
 }
+
+.linkUnderline{
+font-weight: bold;
+text-decoration-line: underline;
+}
