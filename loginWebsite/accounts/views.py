@@ -62,14 +62,14 @@ def LoginPage(request):
                 if user.password_change_date - timedelta(days=5) < timezone.now():
                     wynik = user.password_change_date - timezone.now()
                     messages.error(request,
-                                   f"Zresetuj swoje hasło, bedzie wazne jeszcze przez {wynik.days} dni {wynik.seconds // 3600} godziny")
+                                   f"Your password is still valid for {wynik.days} days {wynik.seconds // 3600} hours. Reset it soon.")
                 return redirect('home')
             else:
                 user: Users = Users.objects.get(username=form.cleaned_data["username"])
                 user.counter += 1
                 log = Logs(activity=Activity.objects.get(activityName="Loggin Failed"), user=user)
                 log.save()
-                if user.counter > 3:
+                if user.counter > 10:
                     user.counter = 0
                     blocked = BlockedUser(user=user)
                     blocked.save()
