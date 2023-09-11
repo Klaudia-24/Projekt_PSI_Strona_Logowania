@@ -147,6 +147,21 @@ top: -5px;
     font-size: 1.5em;
     top: 20px;
 }
+.inputbox ion-icon#passwordToggle{
+    position: absolute;
+    right: 32px;
+    color: #fff;
+    font-size: 1.5em;
+    top: 20px;
+}
+.inputbox ion-icon#passwordToggle2{
+    position: absolute;
+    right: 32px;
+    color: #fff;
+    font-size: 1.5em;
+    top: 20px;
+}
+
 .forget{
     margin: -15px 0 40px ;
     font-size: 14px;
