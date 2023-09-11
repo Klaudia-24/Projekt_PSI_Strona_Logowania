@@ -43,7 +43,7 @@ def LoginPage(request):
             except BlockedUser.DoesNotExist:
                 pass
             else:
-                if blockedUser.time + timedelta(minutes=1) > timezone.now():
+                if blockedUser.time + timedelta(minutes=15) > timezone.now():
                     messages.error(request, "User is blocked temporarily, try again later")
                     return render(request, 'login.html', {'form': form})
                 else:
