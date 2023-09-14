@@ -4,15 +4,15 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<nav class="navbar">
-    <ul class="nav-links">
-      <div class="menu">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'ResetPasswordByEmail' %}">Reset Password</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
-      </div>
-    </ul>
-</nav>
+<!--<nav class="navbar">-->
+<!--    <ul class="nav-links">-->
+<!--      <div class="menu">-->
+<!--        <li><a href="{% url 'home' %}">Home</a></li>-->
+<!--        <li><a href="{% url 'ResetPasswordByEmail' %}">Reset Password</a></li>-->
+<!--        <li><a href="{% url 'logout' %}">Logout</a></li>-->
+<!--      </div>-->
+<!--    </ul>-->
+<!--</nav>-->
 <section class="logged">
     {% if messages %}
         <ul class="messages">
@@ -45,15 +45,15 @@
       </div>
 </section>
     {% else %}
-    <nav class="navbar">
-    <ul class="nav-links">
-         <!-- NAVIGATION MENUS -->
-      <div class="menu">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'login' %}">Login</a></li>
-      </div>
-    </ul>
-</nav>
+<!--    <nav class="navbar">-->
+<!--    <ul class="nav-links">-->
+<!--         &lt;!&ndash; NAVIGATION MENUS &ndash;&gt;-->
+<!--      <div class="menu">-->
+<!--        <li><a href="{% url 'home' %}">Home</a></li>-->
+<!--        <li><a href="{% url 'login' %}">Login</a></li>-->
+<!--      </div>-->
+<!--    </ul>-->
+<!--</nav>-->
 <section class="mainpage">
     <p>Welcome! Use login to enter website.</p>
 </section>

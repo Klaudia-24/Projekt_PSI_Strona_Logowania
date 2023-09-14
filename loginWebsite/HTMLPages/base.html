@@ -8,6 +8,27 @@
 </head>
 <body>
   <main>
+    {% if user.is_authenticated %}
+  <nav class="navbar">
+    <ul class="nav-links">
+      <div class="menu">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'ResetPasswordByEmail' %}">Reset Password</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+      </div>
+    </ul>
+    </nav>
+    {% else %}
+    <nav class="navbar">
+    <ul class="nav-links">
+         <!-- NAVIGATION MENUS -->
+      <div class="menu">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+      </div>
+        </ul>
+    </nav>
+    {% endif %}
     {% block content %}
     {% endblock %}
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

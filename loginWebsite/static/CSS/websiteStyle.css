@@ -20,7 +20,7 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 91vh;
     width: 100%;
     background: url('../images/main_background.jpg')no-repeat;
     background-position: center;
@@ -31,7 +31,7 @@ section.mainpage{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
+    min-height: 91vh;
     width: 100%;
     background: url('../images/main_background.jpg')no-repeat;
     background-position: center;
@@ -50,7 +50,7 @@ section.logged{
 
 section.passwordReset{
     display: grid;
-    min-height: 100vh;
+    min-height: 91vh;
     width: 100%;
     background: url('../images/rest_background.jpg')no-repeat;
     background-position: center;
@@ -307,7 +307,7 @@ th {
 }
 
 .content{
-width:100vh;
+width:91vh;
 }
 
 .bigger{
