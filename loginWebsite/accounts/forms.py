@@ -18,7 +18,6 @@ class SignUpForm(ModelForm):
     def save(self, commit=True):
         user = super(SignUpForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password"])
-        print(user)
         passwordarchive = PasswordArchive()
         passwordarchive.user=user
         passwordarchive.password = user.password
@@ -30,6 +29,18 @@ class SignUpForm(ModelForm):
         super(SignUpForm,self).clean()
         username=self.cleaned_data.get("username")
         email=self.cleaned_data.get("email")
+        try:
+            user = Users.objects.get(username=username)
+        except Users.DoesNotExist:
+            pass
+        else:
+            raise ValidationError("Username already reserved")
+        try:
+            user = Users.objects.get(email=email)
+        except Users.DoesNotExist:
+            pass
+        else:
+            raise ValidationError("Email address already in use")
         if len(username)<3:
             raise ValidationError("User name too short.")
         if len(username)>30:
