@@ -3,16 +3,16 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-{% if form.errors or form.non_field_errors %}
-<!-- error-->
-{% endif %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<!--{% if form.errors or form.non_field_errors %}-->
+<!--&lt;!&ndash; error&ndash;&gt;-->
+<!--{% endif %}-->
+<!--{% if messages %}-->
+<!--<ul class="messages">-->
+<!--    {% for message in messages %}-->
+<!--    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+<!--    {% endfor %}-->
+<!--</ul>-->
+<!--{% endif %}-->
 
     <section>
         <div class="form-box">
@@ -34,6 +34,17 @@
                     <div class="forget">
                         <label>Forget Password? <a href="{% url 'ResetPasswordByEmail' %}">Remind me</a></label>
                     </div>
+                    <div class="errors">
+                    {{form.non_field_errors}}
+                    </div>
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    </br>
+                    {% endif %}
                     <button type="submit">Log in</button>
                     <div class="register">
                         <p>Don't have an account? <a href="{% url 'signup' %}">Register</a></p>

@@ -45,7 +45,7 @@ def LoginPage(request):
             else:
                 if blockedUser.time + timedelta(minutes=15) > timezone.now():
                     messages.error(request, "User is blocked temporarily, try again later")
-                    return render(request, 'login.html', {'form': form})
+                    return render(request, 'registration/login.html', {'form': form})
                 else:
                     blockedUser.delete()
             if user.password_change_date < timezone.now():
